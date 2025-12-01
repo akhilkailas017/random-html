@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>bcryptjs 2.2.0</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bcryptjs/2.2.0/bcrypt.js"
+ integrity="sha512-tFbGxu83rXLUBv8rUnccoJqzpYG3SiZnycAZph1kmsxcwoPnWBhL2ILP6on/6jm7dgQDDGOuNAwNRRmAzDo5ww=="
+ crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+
+<input id="password" placeholder="Enter password">
+<button onclick="hash()">Hash</button>
+<pre id="out"></pre>
+
+<script>
+const bcrypt = dcodeIO.bcrypt;
+bcrypt.setRandomFallback(len => {
+    const b = new Array(len);
+    for (let i = 0; i < len; i++) b[i] = (Math.random() * 256) | 0;
+    return b;
+});
+
+function hash() {
+    const pwd = document.getElementById("password").value;
+
+    bcrypt.genSalt(10, (e, s) => {
+        if (e) return out.textContent = "Salt error: " + e;
+        bcrypt.hash(pwd, s, (e, h) =>
+            out.textContent = e ? "Hash error: " + e : h
+        );
+    });
+}
+</script>
+
+</body>
+</html>
